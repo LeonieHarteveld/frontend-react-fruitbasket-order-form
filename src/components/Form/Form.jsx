@@ -11,11 +11,11 @@ function Form() {
         comments: "",
         bezorgfrequentie: "iedere-week",
         deliveryTime: "day-time",
-        acceptTerms: false,
+        acceptTerms: true,
     });
 
     function handleChange(event) {
-        const changedFieldName = e.target.name;
+        const changedFieldName = event.target.name;
         const newValue = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
         setFormState({
@@ -24,10 +24,14 @@ function Form() {
         });
     }
 
+    function handleSubmit(event) {
+        event.preventDefault();
+        console.log(formState);
+    }
 
     return (
         <>
-            <form>
+            <form onSubmit={(e) => handleSubmit(e)}>
                 <label htmlFor="first-name">Voornaam</label>
                 <input
                     type="text"
@@ -114,13 +118,13 @@ function Form() {
                         type="checkbox"
                         id="accept-terms"
                         name="acceptTerms"
-                        value={formState.acceptTerms}
+                        checked={formState.acceptTerms}
                         onChange={handleChange}
                     />
                     Ik ga akkoord met de voorwaarden
                 </label>
 
-                <button type="button">Verzend</button>
+                <button type="submit">Verzend</button>
 
             </form>
 

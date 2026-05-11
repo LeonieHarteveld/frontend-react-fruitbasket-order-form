@@ -1,19 +1,21 @@
 import './FruitItem.css'
-import {useState} from 'react'
+// import {useState} from 'react'
 
-function FruitItem({emoji, fruit}) {
+function FruitItem({amount, setAmount, fruitKey, emoji, fruit}) {
 
-    const [amount, setAmount] = useState(0);
     const incrementAmount = () => {
-        setAmount(amount + 1);
+        setAmount((prevAmount) => ({
+            ...prevAmount,
+            [fruitKey]: prevAmount[fruitKey] + 1,
+        }));
     };
-    const decrementAmount = () => {
-        setAmount(amount > 0 ? amount - 1 : amount);
-    }
 
-    const reset = () => {
-        setAmount(0);
-    }
+    const decrementAmount = () => {
+        setAmount((prevAmount) => ({
+            ...prevAmount,
+            [fruitKey]: prevAmount[fruitKey] > 0 ? prevAmount[fruitKey] - 1 : 0,
+        }));
+    };
 
     return (
         <>
@@ -24,7 +26,6 @@ function FruitItem({emoji, fruit}) {
                     <button onClick={decrementAmount}>-</button>
                 </p>
             </div>
-            <button onClick={reset}>Reset</button>
         </>
     )
 }
